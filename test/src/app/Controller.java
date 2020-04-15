@@ -3,13 +3,16 @@ package app;
 import javax.swing.*;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 
-public class Controller {
+public class Controller implements ActionListener{
     private Model model;
     private View view;
     private JFrame frame = new JFrame("Test");
+    Timer timer;
 
     //Keyboard controls
     private class CustomDispatcher implements KeyEventDispatcher {
@@ -27,12 +30,21 @@ public class Controller {
         model = _model;
         view = _view;
         view.registerController(this);
-        frame.add(view);
-        frame.setSize(200,300);
+        frame.setContentPane(view);
+        frame.setSize(150,150);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new CustomDispatcher());
+        timer = new Timer(500, this);
+    }
+
+    public void displayGUI() {
         frame.setVisible(true);
+        timer.start();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        view.repaint();
     }
 
 }
