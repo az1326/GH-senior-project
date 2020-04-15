@@ -5,7 +5,7 @@ public class Model {
 
     public Model() {
         direction = 0;
-        System.out.println("Start");
+        System.out.println("start");
     }
 
     public int getDirection() {
