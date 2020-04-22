@@ -14,6 +14,7 @@ public class View extends JPanel{
 
     public View() {
         setBackground(Color.GRAY);
+        setOpaque(false);
         ta = new JTextArea(1, 5);
         ta.setEditable(false);
         add(ta);
