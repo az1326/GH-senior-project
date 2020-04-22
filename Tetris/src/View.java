@@ -1,12 +1,9 @@
 import javax.swing.*;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Dimension;
 
+@SuppressWarnings("serial")
 public class View extends JPanel{
     private Controller cont;
     private Board board;

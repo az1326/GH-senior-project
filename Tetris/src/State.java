@@ -1,7 +1,8 @@
 import javax.swing.*;
-import java.awt.Graphics;
+
 import java.awt.Dimension;
 
+@SuppressWarnings("serial")
 public class State extends JPanel{
     private JLabel gameState;
     private JButton restart;

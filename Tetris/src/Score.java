@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+@SuppressWarnings("serial")
 public class Score extends JPanel {
     private JLabel nextLabel;
     private JLabel scoreLabel;
@@ -23,7 +24,7 @@ public class Score extends JPanel {
             super.paintComponent(g);
             g.setColor(Color.BLACK);
             g.fillRect(15, 15, 45, 45);
-            System.out.println("Update Next");
+            System.out.println("Update Next"); //TODO: println
             /* Handle next piece update */
         }
     }

@@ -3,9 +3,11 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel{
     private BasePanel base;
     private ActivePanel active;
+    private boolean tickState;
 
     private class BasePanel extends JPanel {
         public BasePanel() {
@@ -28,13 +30,15 @@ public class Board extends JPanel{
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.BLACK);
-            g.fillRect(10, 10, 50, 50);
-            System.out.println("Update Active");
+            if (tickState) {g.fillRect(10, 10, 50, 50);}
+            System.out.println("Update Active"); //TODO: println
             /* Handle active updates */
         }
     }
 
     public Board() {
+        tickState = true;
+
         base = new BasePanel();
 
         active = new ActivePanel();
@@ -52,5 +56,6 @@ public class Board extends JPanel{
 
     public void updateActive() {
         active.repaint();
+        tickState = !tickState;
     }
 }
