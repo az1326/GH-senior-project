@@ -33,6 +33,7 @@ public class Controller implements ActionListener{
         frame.setContentPane(view);
         frame.setSize(150,150);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new CustomDispatcher());
         timer = new Timer(500, this);
