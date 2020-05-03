@@ -40,44 +40,44 @@ public class Model {
             return new int[][] {{x,x,x+1,x+1},{y,y+1,y+1,y}};
         if (currentPiece.equals("I")) {
             if (currentOrientation == 0 || currentOrientation == 2) 
-                return new int[][] {{x,x,x,x},{y,y+1,y+2,y+3}};
-            return new int[][] {{x,x+1,x+2,x+3},{y,y,y,y}};
+                return new int[][] {{x+2,x+2,x+2,x+2},{y,y+1,y+2,y+3}};
+            return new int[][] {{x,x+1,x+2,x+3},{y+2,y+2,y+2,y+2}};
         } 
         if (currentPiece.equals("S")) {
             if (currentOrientation ==0 || currentOrientation == 2)
-                return new int[][] {{x,x+1,x+1,x+2},{y+1,y+1,y,y}};
-            return new int[][] {{x,x,x+1,x+1},{y,y+1,y+1,y+2}};
+                return new int[][] {{x,x+1,x+1,x+2},{y+2,y+2,y+1,y+1}};
+            return new int[][] {{x+1,x+1,x+2,x+2},{y,y+1,y+1,y+2}};
         }
         if (currentPiece.equals("Z")) {
             if (currentOrientation == 0 || currentOrientation == 2)
-                return new int[][] {{x,x+1,x+1,x+2},{y,y,y+1,y+1}};
-            return new int[][] {{x,x,x+1,x+1},{y+2,y+1,y+1,y}};
+                return new int[][] {{x,x+1,x+1,x+2},{y+1,y+1,y+2,y+2}};
+            return new int[][] {{x+1,x+1,x+2,x+2},{y+2,y+1,y+1,y}};
         }
         if (currentPiece.equals("T")) {
             if (currentOrientation == 0)
                 return new int[][] {{x,x+1,x+1,x+2},{y+1,y,y+1,y+1}};
             if (currentOrientation == 1)
-                return new int[][] {{x,x,x,x+1},{y,y+1,y+2,y+1}};
+                return new int[][] {{x+1,x+1,x+1,x+2},{y,y+1,y+2,y+1}};
             if (currentOrientation == 2)
-                return new int[][] {{x,x+1,x+1,x+2},{y,y,y+1,y}};
+                return new int[][] {{x,x+1,x+1,x+2},{y+1,y+1,y+2,y+1}};
             return new int[][] {{x,x+1,x+1,x+1},{y+1,y,y+1,y+2}};
         }
         if (currentPiece.equals("J")) {
             if (currentOrientation == 0)
                 return new int[][] {{x,x,x+1,x+2},{y,y+1,y+1,y+1}};
             if (currentOrientation == 1)
-                return new int[][] {{x,x,x,x+1},{y,y+1,y+2,y}};
+                return new int[][] {{x+1,x+1,x+1,x+2},{y,y+1,y+2,y}};
             if (currentOrientation == 2)
-                return new int[][] {{x,x,x+1,x+2},{y,y+1,y,y}};
+                return new int[][] {{x,x,x+1,x+2},{y+1,y+2,y+1,y+1}};
             return new int[][] {{x,x+1,x+1,x+1},{y+2,y+2,y+1,y}};
         }  
         if (currentPiece.equals("L")) {
             if (currentOrientation == 0)
                 return new int[][] {{x,x+1,x+2,x+2},{y+1,y+1,y+1,y}};
             if (currentOrientation == 1)
-                return new int[][] {{x,x,x,x+1},{y,y+1,y+2,y+2}};
+                return new int[][] {{x+1,x+1,x+1,x+2},{y,y+1,y+2,y+2}};
             if (currentOrientation == 2)
-                return new int[][] {{x,x,x+1,x+2},{y,y+1,y,y}};
+                return new int[][] {{x,x,x+1,x+2},{y+1,y+2,y+1,y+1}};
             return new int[][] {{x,x+1,x+1,x+1},{y,y,y+1,y+2}};
         }
         return null;
