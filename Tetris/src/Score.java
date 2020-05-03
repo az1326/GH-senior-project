@@ -22,9 +22,6 @@ public class Score extends JPanel {
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.setColor(Color.BLACK);
-            g.fillRect(15, 15, 45, 45);
-            System.out.println("Update Next"); //TODO: println
             /* Handle next piece update */
         }
     }

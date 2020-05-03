@@ -12,11 +12,26 @@ public class Board extends JPanel{
     private class BasePanel extends JPanel {
         public BasePanel() {
             super();
-            setBackground(Color.GRAY);
+            //setBackground(Color.GRAY);
         }
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+            //Draw Grid
+            g.setColor(Color.GRAY);
+            g.drawLine(14, 39, 316, 39);
+            g.drawLine(316, 39, 316, 641);
+            g.drawLine(14, 641, 316, 641);
+            g.drawLine(14, 39, 14, 641);
+            for (int i = 0; i < 10; i++) {
+                g.fillRect(15 + 30 * i, 40, 1, 600);
+                g.fillRect(15 + 29 + 30 * i, 40, 1, 600);
+            }
+            for (int i = 0; i < 20; i++) {
+                g.fillRect(15, 40 + 30 * i, 300, 1);
+                g.fillRect(15, 40 + 29 + 30 * i, 300, 1);
+            }
+            
             /* Handle base updates */
         }
     }
@@ -29,9 +44,6 @@ public class Board extends JPanel{
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.setColor(Color.BLACK);
-            if (tickState) {g.fillRect(10, 10, 50, 50);}
-            System.out.println("Update Active"); //TODO: println
             /* Handle active updates */
         }
     }

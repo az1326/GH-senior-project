@@ -42,7 +42,6 @@ public class Controller implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         view.updateBoardActive();
-        view.updateNext();
         /* Handle tick */
     }
 
