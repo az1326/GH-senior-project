@@ -50,7 +50,7 @@ public class Model {
         }
         if (currentPiece.equals("Z")) {
             if (currentOrientation == 0 || currentOrientation == 2)
-                return new int[][] {{x,x+1,x+1,x+2},{y,y,y+1,y+2}};
+                return new int[][] {{x,x+1,x+1,x+2},{y,y,y+1,y+1}};
             return new int[][] {{x,x,x+1,x+1},{y+2,y+1,y+1,y}};
         }
         if (currentPiece.equals("T")) {
@@ -69,13 +69,13 @@ public class Model {
                 return new int[][] {{x,x,x,x+1},{y,y+1,y+2,y}};
             if (currentOrientation == 2)
                 return new int[][] {{x,x,x+1,x+2},{y,y+1,y,y}};
-            return new int[][] {{x,x+1,x+1,x+1},{y+2,y+2,y+2,y}};
+            return new int[][] {{x,x+1,x+1,x+1},{y+2,y+2,y+1,y}};
         }  
         if (currentPiece.equals("L")) {
             if (currentOrientation == 0)
                 return new int[][] {{x,x+1,x+2,x+2},{y+1,y+1,y+1,y}};
             if (currentOrientation == 1)
-                return new int[][] {{x,x,x,x+1},{y,y+1,y+1,y+2}};
+                return new int[][] {{x,x,x,x+1},{y,y+1,y+2,y+2}};
             if (currentOrientation == 2)
                 return new int[][] {{x,x,x+1,x+2},{y,y+1,y,y}};
             return new int[][] {{x,x+1,x+1,x+1},{y,y,y+1,y+2}};
@@ -83,12 +83,39 @@ public class Model {
         return null;
     }
 
+    public void rotate(boolean clockwise) {
+        if (clockwise) {
+            currentOrientation = (currentOrientation + 1) % 4;
+        } else {
+            currentOrientation = (currentOrientation + 3) % 4;
+        }
+    }
+
+    public void shift(Direction shift) {
+        if (currentLocation != null) {
+            if (shift == Direction.UP) {
+                currentLocation.y--;
+            } else if (shift == Direction.LEFT) {
+                currentLocation.x--;
+            } else if (shift == Direction.RIGHT) {
+                currentLocation.x++;
+            } else {
+                currentLocation.y++;
+            }
+        }
+    }
+
     public void generate() {
         currentPiece = TETROMINOS[(int) Math.floor(Math.random() * 7)];
-        currentLocation = new Point(0, 5);
+        currentLocation = new Point(3 + (int) Math.floor(Math.random() * 2), 0);
+        currentOrientation = (int) Math.floor(Math.random() * 4);
     }
 
     public void tick() {
         tickCount++;
+    }
+
+    public enum Direction {
+        UP, DOWN, LEFT, RIGHT;
     }
 }
