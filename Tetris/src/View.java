@@ -39,12 +39,9 @@ public class View extends JPanel{
         cont = source;
     }
 
-    public void updateBoardBase() {
-        board.updateBase();
-    }
 
-    public void updateBoardActive() {
-        board.updateActive();
+    public void updateBoard(boolean[][] baseInput, int[][] activeInput) {
+        board.update(baseInput, activeInput);
     }
 
     public void updateNext() {

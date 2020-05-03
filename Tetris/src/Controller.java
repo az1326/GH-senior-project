@@ -16,7 +16,10 @@ public class Controller implements ActionListener{
     private class CustomDispatcher implements KeyEventDispatcher {
         public boolean dispatchKeyEvent (KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-                /* Handle inputs */
+                if (e.getKeyCode() == 32) { //Spacebar
+                    model.generate();
+                    view.updateBoard(model.getBackgroundPieces(), model.getActivePiece());
+                }
             }
             return false;
         }
@@ -41,7 +44,7 @@ public class Controller implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        view.updateBoardActive();
+        model.tick();
         /* Handle tick */
     }
 
