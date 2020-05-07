@@ -78,7 +78,7 @@ public class Model {
             if (currentOrientation == 1)
                 return new int[][] {{x+1,x+1,x+1,x+2},{y,y+1,y+2,y}};
             if (currentOrientation == 2)
-                return new int[][] {{x,x,x+1,x+2},{y+1,y+2,y+1,y+1}};
+                return new int[][] {{x,x+2,x+1,x+2},{y+1,y+2,y+1,y+1}};
             return new int[][] {{x,x+1,x+1,x+1},{y+2,y+2,y+1,y}};
         }  
         if (currentPiece.equals("L")) {
@@ -205,9 +205,40 @@ public class Model {
      * Spawns a new piece
      */
     public void generate() {
-        currentPiece = TETROMINOS[(int) Math.floor(Math.random() * 7)];
-        currentLocation = new Point(3 + (int) Math.floor(Math.random() * 2), 0);
-        currentOrientation = (int) Math.floor(Math.random() * 4);
+        int rng = (int) Math.floor(Math.random() * 7);
+        //rng = 0; //[O,Z,S,L,J,I,T]
+        currentPiece = TETROMINOS[rng];
+
+        switch (rng) {
+            case 0:
+                currentLocation = new Point((int) Math.floor(Math.random() * 8), 0);
+                currentOrientation = 0;
+                break;
+            case 1:
+                currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
+                currentOrientation = 0;
+                break;
+            case 2:
+                currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
+                currentOrientation = 0;
+                break;
+            case 3:
+                currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
+                currentOrientation = 2;
+                break;
+            case 4:
+                currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
+                currentOrientation = 2;
+                break;
+            case 5:
+                currentLocation = new Point((int) Math.floor(Math.random() * 6), 0);
+                currentOrientation = 1;
+                break;
+            case 6:
+                currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
+                currentOrientation = 2;
+                break;
+        }
         tickCount = 0;
     }
 
@@ -253,5 +284,9 @@ public class Model {
 
     public enum Direction {
         UP, DOWN, LEFT, RIGHT;
+    }
+
+    public enum GameState {
+        START_UP, IN_PROGRESS, GAME_OVER;
     }
 }
