@@ -7,7 +7,7 @@ public class Rules extends JPanel{
     private JLabel rules;
 
     public Rules() {
-        rules = new JLabel("test");
+        rules = new JLabel("<html>test1<br>test2");
         add(rules);
     }
 
