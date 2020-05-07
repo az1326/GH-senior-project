@@ -266,6 +266,34 @@ public class Model {
             existingPieces[active[0][j]][active[1][j]] = true;
         }
         generate();
+        checkRows();
+    }
+
+    public void checkRows() {
+        for (int row = 19; row > 0; row--) {
+            boolean full = true;
+            for (int col = 0; col < existingPieces.length; col++) {
+                if (!existingPieces[col][row]) {full = false;}
+            }
+            if (full) {
+                for (int old = row; old > 0; old--) {
+                    for (int col = 0; col < existingPieces.length; col++) {
+                        existingPieces[col][old] = existingPieces[col][old-1];
+                    }
+                }
+                row++;
+            }
+        }
+        for (int row = 0; row < 2; row++) {
+            for (int col = 0; col < existingPieces.length; col++) {
+                if (existingPieces[col][row]) {
+                    currentLocation = null;
+                    currentPiece = null;
+                    System.out.println("Game Over");
+                    return;
+                }
+            }
+        }
     }
 
     /**
