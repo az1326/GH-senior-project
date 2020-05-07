@@ -69,7 +69,8 @@ public class Controller implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        model.tick();
+        if(model.tick())
+            updateBoard();
         /* Handle tick */
     }
 

@@ -41,6 +41,8 @@ public class Board extends JPanel{
             g.fillRect(15, 40 + 30 * i, 300, 1);
             g.fillRect(15, 40 + 29 + 30 * i, 300, 1);
         }
+        g.setColor(Color.RED);
+        g.fillRect(15, 40 + 29 + 30, 300, 2);
         
         //Draw base pieces
         g.setColor(Color.BLACK);
@@ -54,7 +56,7 @@ public class Board extends JPanel{
 
         //Draw active piece
         if (activeData != null) {
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
             for (int i = 0; i < activeData[0].length; i++) {
                 g.fillRect(16 + 30 * activeData[0][i], 41 + 30 * activeData[1][i], 28, 28);
             }
