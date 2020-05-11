@@ -207,7 +207,8 @@ public class Model {
         boolean condition = true;
         int shift = 0;
         for (int i = 0; i < candidate[0].length; i++) {
-            if (candidate[0][i] + shift < 0 || candidate[0][i] + shift > 9 || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
+            if (candidate[0][i] + shift < 0 || candidate[0][i] + shift > 9 
+                    || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
                 condition = false;
             }
         }
@@ -216,7 +217,8 @@ public class Model {
         condition = true;
         shift = 1;
         for (int i = 0; i < candidate[0].length; i++) {
-            if (candidate[0][i] + shift < 0 || candidate[0][i] + shift > 9 || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
+            if (candidate[0][i] + shift < 0 || candidate[0][i] + shift > 9 
+                    || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
                 condition = false;
             }
         }
@@ -225,7 +227,8 @@ public class Model {
         condition = true;
         shift = -1;
         for (int i = 0; i < candidate[0].length; i++) {
-            if (candidate[0][i] +shift < 0 || candidate[0][i] + shift > 9 || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
+            if (candidate[0][i] +shift < 0 || candidate[0][i] + shift > 9 
+                    || existingPieces[candidate[0][i] + shift][candidate[1][i]]) {
                 condition = false;
             }
         }

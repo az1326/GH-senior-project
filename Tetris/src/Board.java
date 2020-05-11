@@ -71,7 +71,8 @@ public class Board extends JPanel{
             g.setColor(Color.BLACK);
             g.setFont(g.getFont().deriveFont(g.getFont().getSize() * 3f));
             String gg = "GAME OVER";
-            g.drawString(gg, 30 + (270 - g.getFontMetrics().stringWidth(gg)) / 2, 230 - (80 - g.getFontMetrics().getAscent()) / 2);
+            g.drawString(gg, 30 + (270 - g.getFontMetrics().stringWidth(gg)) / 2,
+                230 - (80 - g.getFontMetrics().getAscent()) / 2);
         }
     }//End of paint
 }

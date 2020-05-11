@@ -77,7 +77,8 @@ public class Controller implements ActionListener{
     }
 
     public void updateView() {
-        view.updateBoard(model.getBackgroundPieces(), model.getActivePiece(), model.getState() == Model.GameState.GAME_OVER);
+        view.updateBoard(model.getBackgroundPieces(), model.getActivePiece(),
+            model.getState() == Model.GameState.GAME_OVER);
         view.updateNext(model.getNextPiece());
         view.updateScore(model.getScore());
         view.updateState(model.getState());
