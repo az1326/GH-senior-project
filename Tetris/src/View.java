@@ -27,7 +27,7 @@ public class View extends JPanel{
         nonBoardPanel.setLayout(new BoxLayout(nonBoardPanel, BoxLayout.PAGE_AXIS));
         score.setPreferredSize(new Dimension(175, 200));
         nonBoardPanel.add(score);
-        rules.setPreferredSize(new Dimension(175, 200));
+        rules.setPreferredSize(new Dimension(175, 400));
         nonBoardPanel.add(rules);
         state.setPreferredSize(new Dimension(175, 100));
         nonBoardPanel.add(state);
