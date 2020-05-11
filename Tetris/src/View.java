@@ -54,6 +54,10 @@ public class View extends JPanel{
         score.updateScore(scoreVal);
     }
 
+    public void updateState(Model.GameState gameState) {
+        state.updateState(gameState);
+    }
+
     public void registerButtonListener(ActionListener listener) {
         state.registerButtonListener(listener);
     }
