@@ -18,25 +18,25 @@ public class Controller implements ActionListener{
             if (e.getID() == KeyEvent.KEY_PRESSED) {
                 if (e.getKeyCode() == 32) { //Spacebar
                     model.generate();
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 38) { //Up arrow
                     model.shift(Model.Direction.UP);
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 40) { //Down arrow
                     model.shift(Model.Direction.DOWN);
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 39) { //Right arrow
                     model.shift(Model.Direction.RIGHT);
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 37) { //Left arrow
                     model.shift(Model.Direction.LEFT);
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 90) { //z
                     model.rotate(false);
-                    updateBoard();
+                    updateView();
                 } else if (e.getKeyCode() == 88) { //x
                     model.rotate(true);
-                    updateBoard();
+                    updateView();
                 }
                 else {
                     System.out.println(e.getKeyCode());
@@ -64,13 +64,14 @@ public class Controller implements ActionListener{
         timer.start();
     }
 
-    public void updateBoard() {
+    public void updateView() {
         view.updateBoard(model.getBackgroundPieces(), model.getActivePiece());
+        view.updateNext(model.getNextPiece());
     }
 
     public void actionPerformed(ActionEvent e) {
         if(model.tick())
-            updateBoard();
+            updateView();
         /* Handle tick */
     }
 

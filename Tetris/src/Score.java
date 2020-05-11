@@ -14,15 +14,70 @@ public class Score extends JPanel {
     private JLabel score;
 
     private class NextPanel extends JPanel {
+        private String nextPiece;
+
         public NextPanel() {
             super();
+            nextPiece = null;
             setPreferredSize(new Dimension(75, 75));
             setBackground(Color.WHITE);
         }
 
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            /* Handle next piece update */
+            g.setColor(Color.GRAY);
+            if (nextPiece != null) {
+                switch (nextPiece) {
+                    case "O":
+                        g.fillRect(21, 21, 15, 15);
+                        g.fillRect(21, 39, 15, 15);
+                        g.fillRect(39, 21, 15, 15);
+                        g.fillRect(39, 39, 15, 15);
+                        break;
+                    case "I":
+                        g.fillRect(3, 30, 15, 15);
+                        g.fillRect(21, 30, 15, 15);
+                        g.fillRect(39, 30, 15, 15);
+                        g.fillRect(57, 30, 15, 15);
+                        break;
+                    case "S":
+                        g.fillRect(12, 39, 15, 15);
+                        g.fillRect(30, 39, 15, 15);
+                        g.fillRect(30, 21, 15, 15);
+                        g.fillRect(48, 21, 15, 15);
+                        break;
+                    case "Z":
+                        g.fillRect(12, 21, 15, 15);
+                        g.fillRect(30, 39, 15, 15);
+                        g.fillRect(30, 21, 15, 15);
+                        g.fillRect(48, 39, 15, 15);
+                        break;
+                    case "T":
+                        g.fillRect(12, 21, 15, 15);
+                        g.fillRect(30, 39, 15, 15);
+                        g.fillRect(30, 21, 15, 15);
+                        g.fillRect(48, 21, 15, 15);
+                        break;
+                    case "J":
+                        g.fillRect(12, 21, 15, 15);
+                        g.fillRect(30, 21, 15, 15);
+                        g.fillRect(48, 21, 15, 15);
+                        g.fillRect(48, 39, 15, 15);
+                        break;
+                    case "L":
+                        g.fillRect(12, 21, 15, 15);
+                        g.fillRect(12, 39, 15, 15);
+                        g.fillRect(30, 21, 15, 15);
+                        g.fillRect(48, 21, 15, 15);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public void updateNextPiece(String nextPiece) {
+            this.nextPiece = nextPiece;
         }
     }
 
@@ -61,7 +116,8 @@ public class Score extends JPanel {
         add(score, c);
     }
 
-    public void updateNext() {
+    public void updateNext(String nextPiece) {
+        next.updateNextPiece(nextPiece);
         next.repaint();
     }
 }

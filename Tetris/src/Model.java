@@ -38,8 +38,18 @@ public class Model {
         }
     }
 
+    /**
+     * Returns a 2d array representing the status of each background cell
+     */
     public boolean[][] getBackgroundPieces() {
         return existingPieces;
+    }
+
+    /**
+     * Returns a String representing the next piece
+     */
+    public String getNextPiece() {
+        return nextPiece;
     }
 
     /**
@@ -305,6 +315,7 @@ public class Model {
                 if (existingPieces[col][row]) {
                     currentLocation = null;
                     currentPiece = null;
+                    nextPiece = null;
                     System.out.println("Game Over");
                     return;
                 }
