@@ -6,6 +6,7 @@ public class Model {
     //Game Control
     private int tickCount;
     private int tickRate;
+    private int score;
 
     //Base Board
     private boolean[][] existingPieces;
@@ -21,6 +22,7 @@ public class Model {
     
 
     public Model() {
+        score = 0;
         tickCount = 0;
         tickRate = 2;
 
@@ -36,6 +38,13 @@ public class Model {
                 existingPieces[i][j] = false;
             }
         }
+    }
+
+    /**
+     * Returns the current score
+     */
+    public int getScore() {
+        return score;
     }
 
     /**
@@ -295,6 +304,7 @@ public class Model {
      */
     public void checkRows() {
         //Check for row clearing
+        int cleared = 0;
         for (int row = 19; row > 0; row--) {
             boolean full = true;
             for (int col = 0; col < existingPieces.length; col++) {
@@ -306,9 +316,23 @@ public class Model {
                         existingPieces[col][old] = existingPieces[col][old-1];
                     }
                 }
+                cleared++;
                 row++;
             }
         }
+
+        //Adjust score
+        if (cleared == 0)
+            ;
+        else if (cleared == 1)
+            score += 100;
+        else if (cleared == 2)
+            score += 250;
+        else if (cleared == 3)
+            score += 450;
+        else if (cleared == 4)
+            score += 750;
+
         //Check for game over
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < existingPieces.length; col++) {
