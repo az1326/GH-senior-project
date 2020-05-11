@@ -62,7 +62,6 @@ public class Controller implements ActionListener{
         model = _model;
         view = _view;
         view.registerButtonListener(new ButtonListener());
-        view.registerController(this);
         frame.setContentPane(view);
         frame.setSize(500, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,8 +84,10 @@ public class Controller implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(model.tick())
+        if (model.tick())
             updateView();
+        if (model.getState() == Model.GameState.GAME_OVER)
+            timer.stop();
     }
 
 }

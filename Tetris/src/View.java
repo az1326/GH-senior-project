@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class View extends JPanel{
-    private Controller cont;
     private Board board;
     private Rules rules;
     private Score score;
@@ -36,11 +35,6 @@ public class View extends JPanel{
 
         add(nonBoardPanel, BorderLayout.LINE_END);
     }
-
-    public void registerController(Controller source) {
-        cont = source;
-    }
-
 
     public void updateBoard(boolean[][] baseInput, int[][] activeInput) {
         board.update(baseInput, activeInput);
