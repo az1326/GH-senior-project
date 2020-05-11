@@ -17,8 +17,6 @@ public class Controller implements ActionListener{
         public boolean dispatchKeyEvent (KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
                 if (e.getKeyCode() == 32) { //Spacebar
-                    model.generate();
-                    updateView();
                 } else if (e.getKeyCode() == 38) { //Up arrow
                     model.shift(Model.Direction.UP);
                     updateView();
@@ -46,9 +44,24 @@ public class Controller implements ActionListener{
         }
     }
 
+    private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (model.getState().equals(Model.GameState.START_UP)) {
+                timer.start();
+                model.start();
+                updateView();
+            } else {
+                model.reset();
+                timer.stop();
+                updateView();
+            }
+        }
+    }
+
     public Controller (Model _model, View _view) {
         model = _model;
         view = _view;
+        view.registerButtonListener(new ButtonListener());
         view.registerController(this);
         frame.setContentPane(view);
         frame.setSize(500, 700);
@@ -61,7 +74,7 @@ public class Controller implements ActionListener{
 
     public void displayGUI() {
         frame.setVisible(true);
-        timer.start();
+        //timer.start();
     }
 
     public void updateView() {

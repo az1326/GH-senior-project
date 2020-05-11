@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import java.awt.event.ActionListener;
+
 @SuppressWarnings("serial")
 public class View extends JPanel{
     private Controller cont;
@@ -50,5 +52,9 @@ public class View extends JPanel{
 
     public void updateScore(int scoreVal) {
         score.updateScore(scoreVal);
+    }
+
+    public void registerButtonListener(ActionListener listener) {
+        state.registerButtonListener(listener);
     }
 }

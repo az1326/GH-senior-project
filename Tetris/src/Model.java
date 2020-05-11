@@ -4,6 +4,7 @@ public class Model {
     private final String[] TETROMINOS = {"O", "Z", "S", "L", "J", "I", "T"};
 
     //Game Control
+    private GameState state;
     private int tickCount;
     private int tickRate;
     private int score;
@@ -22,6 +23,7 @@ public class Model {
     
 
     public Model() {
+        state = GameState.START_UP;
         score = 0;
         tickCount = 0;
         tickRate = 20;
@@ -45,6 +47,13 @@ public class Model {
      */
     public int getScore() {
         return score;
+    }
+
+    /** 
+     * Returns the game state
+     */
+    public GameState getState() {
+        return state;
     }
 
     /**
@@ -339,11 +348,8 @@ public class Model {
         //Check for game over
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < existingPieces.length; col++) {
-                if (existingPieces[col][row]) {
-                    currentLocation = null;
-                    currentPiece = null;
-                    nextPiece = null;
-                    System.out.println("Game Over");
+                if (existingPieces[col][row]) {    
+                    gameOver();
                     return;
                 }
             }
@@ -362,6 +368,42 @@ public class Model {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Resets the model
+     */
+    public void reset() {
+        state = GameState.START_UP;
+
+        score = 0;
+        tickCount = 0;
+        tickRate = 20;
+
+        currentPiece = null;
+        currentLocation = null;
+        currentOrientation = 0;
+
+        nextPiece = null;
+
+        existingPieces = new boolean[10][20];
+        for (int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                existingPieces[i][j] = false;
+            }
+        }
+    }
+
+    public void start() {
+        state = GameState.IN_PROGRESS;
+        generate();
+    }
+
+    public void gameOver() {
+        state = GameState.GAME_OVER;
+        currentLocation = null;
+        currentPiece = null;
+        nextPiece = null;
     }
 
     public enum Direction {
