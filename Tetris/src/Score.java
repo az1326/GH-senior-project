@@ -13,6 +13,8 @@ public class Score extends JPanel {
     private NextPanel next;
     private JLabel score;
 
+    private int scoreVal;
+
     private class NextPanel extends JPanel {
         private String nextPiece;
 
@@ -82,6 +84,8 @@ public class Score extends JPanel {
     }
 
     public Score() {
+        scoreVal = 0;
+
         nextLabel = new JLabel("Next:");
         nextLabel.setHorizontalAlignment(JLabel.CENTER);
         nextLabel.setVerticalAlignment(JLabel.BOTTOM);
@@ -92,7 +96,7 @@ public class Score extends JPanel {
 
         next = new NextPanel();
         
-        score = new JLabel("XXXX");
+        score = new JLabel("0000");
         score.setHorizontalAlignment(JLabel.CENTER);
         score.setVerticalAlignment(JLabel.TOP);
 
@@ -114,6 +118,22 @@ public class Score extends JPanel {
         c.gridx = 1;
         c.gridy = 1;
         add(score, c);
+    }
+
+    private String formatScore() {
+        String prelim = String.valueOf(scoreVal);
+        if (scoreVal < 1000) {
+            int index = prelim.length();
+            for (int i = 4; i > index; i--) {
+                prelim = "0" + prelim;
+            }
+        }
+        return prelim;
+    }
+
+    public void updateScore(int scoreVal) {
+        this.scoreVal = scoreVal;
+        score.setText(formatScore());
     }
 
     public void updateNext(String nextPiece) {

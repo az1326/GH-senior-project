@@ -67,6 +67,7 @@ public class Controller implements ActionListener{
     public void updateView() {
         view.updateBoard(model.getBackgroundPieces(), model.getActivePiece());
         view.updateNext(model.getNextPiece());
+        view.updateScore(model.getScore());
     }
 
     public void actionPerformed(ActionEvent e) {

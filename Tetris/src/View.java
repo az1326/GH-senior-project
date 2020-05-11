@@ -47,4 +47,8 @@ public class View extends JPanel{
     public void updateNext(String nextPiece) {
         score.updateNext(nextPiece);
     }
+
+    public void updateScore(int scoreVal) {
+        score.updateScore(scoreVal);
+    }
 }
