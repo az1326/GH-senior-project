@@ -132,8 +132,10 @@ public class Score extends JPanel {
     }
 
     public void updateScore(int scoreVal) {
-        this.scoreVal = scoreVal;
-        score.setText(formatScore());
+        if (this.scoreVal != scoreVal) {
+            this.scoreVal = scoreVal;
+            score.setText(formatScore());
+        }
     }
 
     public void updateNext(String nextPiece) {
