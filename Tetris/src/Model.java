@@ -15,6 +15,9 @@ public class Model {
     private Point currentLocation;
     private int currentOrientation;
     private int[][] active;
+
+    //Next Piece
+    private String nextPiece;
     
 
     public Model() {
@@ -24,6 +27,8 @@ public class Model {
         currentPiece = null;
         currentLocation = null;
         currentOrientation = 0;
+
+        nextPiece = null;
 
         existingPieces = new boolean[10][20];
         for (int i = 0; i < 10; i++) {
@@ -207,34 +212,40 @@ public class Model {
     public void generate() {
         int rng = (int) Math.floor(Math.random() * 7);
         //rng = 0; //[O,Z,S,L,J,I,T]
-        currentPiece = TETROMINOS[rng];
 
-        switch (rng) {
-            case 0:
+        if (nextPiece == null) {
+            nextPiece = TETROMINOS[(int) Math.floor(Math.random() * 7)];
+        }
+
+        currentPiece = nextPiece;
+        nextPiece = TETROMINOS[rng];
+
+        switch (currentPiece) {
+            case "O":
                 currentLocation = new Point((int) Math.floor(Math.random() * 8), 0);
                 currentOrientation = 0;
                 break;
-            case 1:
+            case "Z":
                 currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
                 currentOrientation = 0;
                 break;
-            case 2:
+            case "S":
                 currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
                 currentOrientation = 0;
                 break;
-            case 3:
+            case "L":
                 currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
                 currentOrientation = 2;
                 break;
-            case 4:
+            case "J":
                 currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
                 currentOrientation = 2;
                 break;
-            case 5:
+            case "I":
                 currentLocation = new Point((int) Math.floor(Math.random() * 6), 0);
                 currentOrientation = 1;
                 break;
-            case 6:
+            case "T":
                 currentLocation = new Point((int) Math.floor(Math.random() * 7), -1);
                 currentOrientation = 2;
                 break;
@@ -269,7 +280,11 @@ public class Model {
         checkRows();
     }
 
+    /**
+     * Checks to see if any rows can be cleared or if there's a game over
+     */
     public void checkRows() {
+        //Check for row clearing
         for (int row = 19; row > 0; row--) {
             boolean full = true;
             for (int col = 0; col < existingPieces.length; col++) {
@@ -284,6 +299,7 @@ public class Model {
                 row++;
             }
         }
+        //Check for game over
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < existingPieces.length; col++) {
                 if (existingPieces[col][row]) {
