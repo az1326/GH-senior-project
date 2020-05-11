@@ -56,7 +56,7 @@ public class Controller implements ActionListener{
         frame.setResizable(false);
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new CustomDispatcher());
-        timer = new Timer(500, this);
+        timer = new Timer(20, this);
     }
 
     public void displayGUI() {
@@ -73,7 +73,6 @@ public class Controller implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(model.tick())
             updateView();
-        /* Handle tick */
     }
 
 }

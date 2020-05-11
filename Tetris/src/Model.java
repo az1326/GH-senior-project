@@ -24,7 +24,7 @@ public class Model {
     public Model() {
         score = 0;
         tickCount = 0;
-        tickRate = 2;
+        tickRate = 20;
 
         currentPiece = null;
         currentLocation = null;
@@ -332,6 +332,9 @@ public class Model {
             score += 450;
         else if (cleared == 4)
             score += 750;
+
+        //Adjust tick rate
+        tickRate = (int) Math.floor(30 - Math.log(score * score + Math.exp(10)));
 
         //Check for game over
         for (int row = 0; row < 2; row++) {
