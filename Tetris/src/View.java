@@ -36,8 +36,8 @@ public class View extends JPanel{
         add(nonBoardPanel, BorderLayout.LINE_END);
     }
 
-    public void updateBoard(boolean[][] baseInput, int[][] activeInput) {
-        board.update(baseInput, activeInput);
+    public void updateBoard(boolean[][] baseInput, int[][] activeInput, boolean status) {
+        board.update(baseInput, activeInput, status);
     }
 
     public void updateNext(String nextPiece) {

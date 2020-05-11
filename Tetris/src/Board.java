@@ -7,10 +7,12 @@ import java.awt.Graphics;
 public class Board extends JPanel{
     private boolean[][] baseData;
     private int[][] activeData;
+    private boolean gameOver;
 
     public Board() {
         baseData = new boolean[10][20];
         activeData = null;
+        gameOver = false;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 20; j++) {
                 baseData[i][j] = false;
@@ -18,9 +20,10 @@ public class Board extends JPanel{
         }
     }
 
-    public void update(boolean[][] baseInput, int[][] activeInput) {
+    public void update(boolean[][] baseInput, int[][] activeInput, boolean status) {
         baseData = baseInput;
         activeData = activeInput;
+        gameOver = status;
         this.repaint();
     }
 
@@ -60,6 +63,15 @@ public class Board extends JPanel{
             for (int i = 0; i < activeData[0].length; i++) {
                 g.fillRect(16 + 30 * activeData[0][i], 41 + 30 * activeData[1][i], 28, 28);
             }
+        }
+
+        if (gameOver) {
+            g.setColor(Color.WHITE);
+            g.fillRect(30, 150, 270, 80);
+            g.setColor(Color.BLACK);
+            g.setFont(g.getFont().deriveFont(g.getFont().getSize() * 3f));
+            String gg = "GAME OVER";
+            g.drawString(gg, 30 + (270 - g.getFontMetrics().stringWidth(gg)) / 2, 230 - (80 - g.getFontMetrics().getAscent()) / 2);
         }
     }//End of paint
 }
