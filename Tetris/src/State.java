@@ -4,6 +4,10 @@ import java.awt.Dimension;
 
 import java.awt.event.ActionListener;
 
+/**
+ * Class extends JPanel. Represents the part of the view that includes the button
+ * and indicates current game status.
+ */
 @SuppressWarnings("serial")
 public class State extends JPanel{
     private JLabel gameState;
@@ -11,6 +15,9 @@ public class State extends JPanel{
 
     private Model.GameState status;
 
+    /**
+     * Contructor method for State. Sets components to default values and adds components to the panel.
+     */
     public State() {
         gameState = new JLabel("Click to Start");
         gameState.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -22,12 +29,20 @@ public class State extends JPanel{
         add(restart);
     }
 
+    /**
+     * Registers the given ActionListener to the start/reset button.
+     * @param listener the listener to register
+     */
     public void registerButtonListener(ActionListener listener) {
         restart.addActionListener(listener);
     }
 
+    /**
+     * Updates the game state in the view if needed.
+     * @param gameState the given GameState
+     */
     public void updateState(Model.GameState gameState) {
-        if (status == null || status != gameState) {
+        if (status == null || status != gameState) { //Proceed only if there is a change in gameState
             status = gameState;
             if (status == Model.GameState.IN_PROGRESS) {
                 this.gameState.setText("Click to Reset");

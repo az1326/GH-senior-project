@@ -22,18 +22,25 @@ public class Model {
     private String nextPiece;
     
 
+    /**
+     * Constructor method. Instantiates and sets all fields to default.
+     */
     public Model() {
+        //Game State
         state = GameState.START_UP;
         score = 0;
         tickCount = 0;
         tickRate = 20;
 
+        //Current Piece
         currentPiece = null;
         currentLocation = null;
         currentOrientation = 0;
 
+        //Next Piece
         nextPiece = null;
 
+        //Board
         existingPieces = new boolean[10][20];
         for (int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
@@ -44,6 +51,7 @@ public class Model {
 
     /**
      * Returns the current score
+     * @return the current score
      */
     public int getScore() {
         return score;
@@ -51,6 +59,7 @@ public class Model {
 
     /** 
      * Returns the game state
+     * @return the game state
      */
     public GameState getState() {
         return state;
@@ -58,6 +67,7 @@ public class Model {
 
     /**
      * Returns a 2d array representing the status of each background cell
+     * @return a 2d boolean array of status of each cell
      */
     public boolean[][] getBackgroundPieces() {
         return existingPieces;
@@ -65,6 +75,7 @@ public class Model {
 
     /**
      * Returns a String representing the next piece
+     * @return the next piece to spawn
      */
     public String getNextPiece() {
         return nextPiece;
@@ -72,11 +83,15 @@ public class Model {
 
     /**
      * Returns a 2d array representing the location of the active piece
+     * @return {@code null} if no current piece or invalid data,
+     * a 2d int array of the location of the current piece otherwise
      */
     public int[][] getActivePiece() {
-        if (currentPiece == null || currentLocation == null || currentOrientation < 0 || currentOrientation > 3) {
-            return null;
+        if (currentPiece == null || currentLocation == null || currentOrientation < 0 
+                || currentOrientation > 3) {
+            return null; //return null if no current piece or invalid data
         }
+        //Store current locations for ease of reference
         int x = currentLocation.x;
         int y = currentLocation.y;
         if (currentPiece.equals("O")) 
@@ -126,20 +141,27 @@ public class Model {
         return null;
     }
 
+    /**
+     * Convenience method for ease of reference in validation methods.
+     * Transfers fields representing current piece location to an array.
+     */
     private void updateActiveArray() {
         active = getActivePiece();
     }
 
     /**
-     * Rotates the active piece
+     * Rotates the active piece with validation
+     * @param clockwise {@code true} if piece to spin clockwise, {code false} otherwise
      */
     public void rotate(boolean clockwise) {
-        if (currentLocation != null) {
+        if (currentLocation != null) { //Only run if a current piece exists
             if (clockwise) {
+                //Temporarily rotate piece pending validation
                 currentOrientation = (currentOrientation + 1) % 4;
                 int validation = validate(getActivePiece());
                 currentOrientation = (currentOrientation + 3) % 4;
 
+                //Implement rotation (with validation shifts) if validation successful
                 if (validation == 0) {
                     currentOrientation = (currentOrientation + 1) % 4;
                 } else if (validation == 1) {
@@ -150,10 +172,12 @@ public class Model {
                     currentLocation.x--;
                 }
             } else {
+                //Temporarily rotate piece pending validation
                 currentOrientation = (currentOrientation + 3) % 4;
                 int validation = validate(getActivePiece());
                 currentOrientation = (currentOrientation + 1) % 4;
 
+                //Implement rotation (with validation shifts) if validation successful
                 if (validation == 0) {
                     currentOrientation = (currentOrientation + 3) % 4;
                 } else if (validation == 1) {
@@ -169,10 +193,19 @@ public class Model {
 
     /**
      * Shifts the active piece in a direction
+     * @param shift the direction to move the piece
      */
     public void shift(Direction shift) {
-        if (currentLocation != null) {
-            updateActiveArray();
+        if (currentLocation != null) { //Only shift if a current piece exists
+            updateActiveArray(); //Update for ease of reference
+            /* For each direction:
+             * 1) Iterate through each cell of the active piece
+             * 2) Shift each cell in direction indicated
+             * 3) Validate each cell is invalid
+             * 4) If invalid, return
+             * 5) If no cell is invalid, shift the piece
+             * Separate method for dropping a piece as piece may need to lock
+             */
             if (shift == Direction.UP) {
                 for (int i = 0; i < active[0].length; i++) {
                     if (active[1][i] - 1 < 0 || existingPieces[active[0][i]][active[1][i] - 1]) {return;}
@@ -195,14 +228,27 @@ public class Model {
     }
 
     /**
-     * Validate rotation and adjust as needed
+     * Validates rotation attempt
+     * @param candidate the result to validate
+     * @return 2 if rotation is entirely invalid, otherwise returns the needed
+     * number of cells to shift to be valid
      */
-    public int validate(int[][] candidate) {
+    private int validate(int[][] candidate) {
+        //Do not attempt validation if candidate does not have valid y-position
         for (int i = 0; i < candidate[0].length; i++) {
             if (candidate[1][i] < 0 || candidate[1][i] > 19) {
                 return 2;
             }
         }
+
+        /*
+         * For each validation attempt, in order of 0, 1, -1 (original, shift 1 right, shift 1 left)
+         * 1) Iterate through each candidate cell
+         * 2) Apply the shift
+         * 3) If shifted cell is invalid, move on to next attempt
+         * 4) If all cells are valid, return shift
+         * If all attempts are invalid, return 2
+         */
 
         boolean condition = true;
         int shift = 0;
@@ -240,17 +286,20 @@ public class Model {
     /**
      * Spawns a new piece
      */
-    public void generate() {
+    private void generate() {
         int rng = (int) Math.floor(Math.random() * 7);
         //rng = 0; //[O,Z,S,L,J,I,T]
 
+        //Generate a random piece if nextPiece does not yet exist
         if (nextPiece == null) {
             nextPiece = TETROMINOS[(int) Math.floor(Math.random() * 7)];
         }
 
+        //Current piece is now next piece, randomly create next piece
         currentPiece = nextPiece;
         nextPiece = TETROMINOS[rng];
 
+        //Each piece must spawn in a specific orientation and within a specific set of x-coordinates to be valid
         switch (currentPiece) {
             case "O":
                 currentLocation = new Point((int) Math.floor(Math.random() * 8), 0);
@@ -281,29 +330,30 @@ public class Model {
                 currentOrientation = 2;
                 break;
         }
-        tickCount = 0;
+        tickCount = 0; //Reset tick counter
     }
 
     /**
-     * Drop active piece
+     * Drop active piece and lock if needed
      */
-    public void drop() {
-        if (currentLocation != null) {
+    private void drop() {
+        if (currentLocation != null) { //Only run if current piece exists
             for (int i = 0; i < active[0].length; i++) {
                 int shift = active[1][i] + 1;
                 if (shift > 19 || existingPieces[active[0][i]][shift]) {
-                    lock();
+                    lock(); //Lock and return if piece would have fallen to an invalid location
                     return;
                 }
             }
-            currentLocation.y++;
+            currentLocation.y++; //Drop piece otherwise
         }
     }
 
     /**
-     * Lock piece in and spawn new piece
+     * Locks piece in, spawns new piece, and checks for row-clears/game over
      */
-    public void lock() {
+    private void lock() {
+        //Each location the active piece occupied is transferred to the background cells
         for (int j = 0; j < active[0].length; j++) {
             existingPieces[active[0][j]][active[1][j]] = true;
         }
@@ -314,8 +364,15 @@ public class Model {
     /**
      * Checks to see if any rows can be cleared or if there's a game over
      */
-    public void checkRows() {
-        //Check for row clearing
+    private void checkRows() {
+        /*
+         * Check for row clearing by:
+         * 1) Iterating through each row from bottom up
+         * 2) If each cell in row is filled
+         *    a) Shift every row above it one down
+         *    b) Move down a row (so when code iterates up a row no row is skipped)
+         *    c) Increase count of cleared rows  
+         */
         int cleared = 0;
         for (int row = 19; row > 0; row--) {
             boolean full = true;
@@ -348,7 +405,7 @@ public class Model {
         //Adjust tick rate
         tickRate = (int) Math.floor(30 - Math.log(score * score + Math.exp(10)));
 
-        //Check for game over
+        //Check for game over: game over if any cell is locked in top 2 rows
         for (int row = 0; row < 2; row++) {
             for (int col = 0; col < existingPieces.length; col++) {
                 if (existingPieces[col][row]) {    
@@ -374,7 +431,7 @@ public class Model {
     }
 
     /**
-     * Resets the model
+     * Resets the model. All fields set to default
      */
     public void reset() {
         state = GameState.START_UP;
@@ -397,22 +454,35 @@ public class Model {
         }
     }
 
+    /**
+     * Starts the game.
+     */
     public void start() {
         state = GameState.IN_PROGRESS;
         generate();
     }
 
-    public void gameOver() {
+    /**
+     * Call when a game over state is reached.
+     */
+    private void gameOver() {
+        //Do not set background cells to default so that loss condition can be displayed in view
         state = GameState.GAME_OVER;
         currentLocation = null;
         currentPiece = null;
         nextPiece = null;
     }
 
+    /**
+     * Represents the directions a piece can be shifted
+     */
     public enum Direction {
         UP, DOWN, LEFT, RIGHT;
     }
 
+    /**
+     * Represents the possible states of the game
+     */
     public enum GameState {
         START_UP, IN_PROGRESS, GAME_OVER;
     }

@@ -3,12 +3,18 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/**
+ * Class extends JPanel. Represents the game board.
+ */
 @SuppressWarnings("serial")
 public class Board extends JPanel{
     private boolean[][] baseData;
     private int[][] activeData;
     private boolean gameOver;
 
+    /**
+     * Constructor method. Instantiates and sets each field to default.
+     */
     public Board() {
         baseData = new boolean[10][20];
         activeData = null;
@@ -20,6 +26,12 @@ public class Board extends JPanel{
         }
     }
 
+    /**
+     * Updates each field and repaints the board.
+     * @param baseInput a 2d boolean array representing the state of each cell
+     * @param activeInput a 2d int array representing the location of the current piece
+     * @param status {@code true} if the game is over, {@code false} otherwise
+     */
     public void update(boolean[][] baseInput, int[][] activeInput, boolean status) {
         baseData = baseInput;
         activeData = activeInput;
@@ -44,6 +56,7 @@ public class Board extends JPanel{
             g.fillRect(15, 40 + 30 * i, 300, 1);
             g.fillRect(15, 40 + 29 + 30 * i, 300, 1);
         }
+        //Indicate game over line
         g.setColor(Color.RED);
         g.fillRect(15, 40 + 29 + 30, 300, 2);
         
@@ -65,6 +78,7 @@ public class Board extends JPanel{
             }
         }
 
+        //Draw game over text if needed
         if (gameOver) {
             g.setColor(Color.WHITE);
             g.fillRect(30, 150, 270, 80);

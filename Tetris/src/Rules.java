@@ -2,6 +2,9 @@ import javax.swing.*;
 
 import java.awt.Graphics;
 
+/**
+ * Class extends JPanel. Includes a label providing information about the app.
+ */
 @SuppressWarnings("serial")
 public class Rules extends JPanel{
     private JLabel rules;

@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+/**
+ * Class extends JPanel. Represents the portion of the view that indicates the
+ * next piece to spawn and the score.
+ */
 @SuppressWarnings("serial")
 public class Score extends JPanel {
     private JLabel nextLabel;
@@ -15,9 +19,15 @@ public class Score extends JPanel {
 
     private int scoreVal;
 
+    /**
+     * Panel represents only the portion that draws the next piece to spawn
+     */
     private class NextPanel extends JPanel {
         private String nextPiece;
 
+        /**
+         * Constructor for NextPanel. Sets panel to a white square.
+         */
         public NextPanel() {
             super();
             nextPiece = null;
@@ -28,7 +38,7 @@ public class Score extends JPanel {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.GRAY);
-            if (nextPiece != null) {
+            if (nextPiece != null) { //Proceed only if there is a valid next piece
                 switch (nextPiece) {
                     case "O":
                         g.fillRect(21, 21, 15, 15);
@@ -78,11 +88,18 @@ public class Score extends JPanel {
             }
         }
 
+        /**
+         * Updates the string representing the type of piece
+         * @param nextPiece the String representing the next piece
+         */
         public void updateNextPiece(String nextPiece) {
             this.nextPiece = nextPiece;
         }
     }
 
+    /**
+     * Constructor for Score. Creates and adds each component to the panel.
+     */
     public Score() {
         scoreVal = 0;
 
@@ -120,6 +137,10 @@ public class Score extends JPanel {
         add(score, c);
     }
 
+    /**
+     * Formats the score to include at least 4 characters.
+     * @return the formatted score as a String
+     */
     private String formatScore() {
         String prelim = String.valueOf(scoreVal);
         if (scoreVal < 1000) {
@@ -131,6 +152,10 @@ public class Score extends JPanel {
         return prelim;
     }
 
+    /**
+     * Updates the score if needed.
+     * @param scoreVal the current score
+     */
     public void updateScore(int scoreVal) {
         if (this.scoreVal != scoreVal) {
             this.scoreVal = scoreVal;
@@ -138,6 +163,10 @@ public class Score extends JPanel {
         }
     }
 
+    /**
+     * Updates the type of piece next to spawn
+     * @param nextPiece the String representing the next piece
+     */
     public void updateNext(String nextPiece) {
         next.updateNextPiece(nextPiece);
         next.repaint();
