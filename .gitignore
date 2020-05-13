@@ -1,3 +1,7 @@
+### Images in Compile Class Folders ###
+bin
+bin2
+
 ### Java ###
 # Compiled class file
 *.class
