@@ -25,7 +25,7 @@ public class View extends JPanel{
         setLayout(new BorderLayout());
 
         //Add board component
-        board.setPreferredSize(new Dimension(325, 700));
+        board.setPreferredSize(new Dimension(325, 670));
         add(board, BorderLayout.LINE_START);
 
         //Add other components to placeholder panel
@@ -35,12 +35,15 @@ public class View extends JPanel{
         nonBoardPanel.add(score);
         rules.setPreferredSize(new Dimension(175, 400));
         nonBoardPanel.add(rules);
-        state.setPreferredSize(new Dimension(175, 100));
+        state.setPreferredSize(new Dimension(175, 70));
         nonBoardPanel.add(state);
-        nonBoardPanel.setPreferredSize(new Dimension(175, 700));
+        nonBoardPanel.setPreferredSize(new Dimension(175, 670));
 
         //Add placeholder panel
-        add(nonBoardPanel, BorderLayout.LINE_END);
+        add(nonBoardPanel, BorderLayout.CENTER);
+
+        //Add spacer at end
+        add(Box.createRigidArea(new Dimension(10, 670)), BorderLayout.LINE_END);
     }
 
     /**

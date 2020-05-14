@@ -73,7 +73,7 @@ public class Controller implements ActionListener{
         view = _view;
         view.registerButtonListener(new ButtonListener());
         frame.setContentPane(view);
-        frame.setSize(500, 700);
+        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
