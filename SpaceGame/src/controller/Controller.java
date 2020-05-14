@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Controller implements ActionListener{
     private Model model;
     private View view;
-    private JFrame frame = new JFrame("Test");
+    private JFrame frame = new JFrame("Space Game");
     Timer timer;
 
     //MouseListener
@@ -22,7 +22,7 @@ public class Controller implements ActionListener{
         model = _model;
         view = _view;
         frame.setContentPane(view);
-        frame.setSize(150,150);
+        frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         timer = new Timer(500, this);
