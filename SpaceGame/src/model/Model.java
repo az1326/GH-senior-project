@@ -106,12 +106,10 @@ public class Model {
             despawn();
             handleRapid();
             adjustSpawns();
-            
             if (shipHealth <= 0 || baseHealth <= 0)
-                gameStatus = GameState.GAME_OVER;
+                gameOver();
             gameTime++;
         }
-
     }
 
     private void moveAsteroids() {
