@@ -2,7 +2,9 @@ package view;
 
 import javax.swing.*;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.awt.Dimension;
+import java.awt.Point;
 
 @SuppressWarnings("serial")
 public class View extends JPanel{
@@ -54,5 +56,13 @@ public class View extends JPanel{
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
+
+    public JPanel getField() {
+        return field;
+    }
+
+    public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations, Point shipLocation) {
+        field.updateField(asteroidLocations, laserLocations, shipLocation);
     }
 }
