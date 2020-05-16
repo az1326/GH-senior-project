@@ -68,7 +68,7 @@ public class Model {
 
         gameTime = 1;
         asteroidSpeed = 3;
-        asteroidSpawnRate = 25;
+        asteroidSpawnRate = 40;
 
         rapidTime = 0;
 
@@ -104,16 +104,9 @@ public class Model {
                 spawnPickup();
             checkCollision();
             despawn();
-            if (rapidStatus == FireState.RAPID) {
-                rapidTime++;
-                if (rapidTime % 5 == 0) {
-                    fireLaser();
-                }
-                if (rapidTime > RAPID_MAX_TIME) {
-                    rapidTime = 0;
-                    rapidStatus = FireState.DEFAULT;
-                }
-            }
+            handleRapid();
+            adjustSpawns();
+            
             if (shipHealth <= 0 || baseHealth <= 0)
                 gameStatus = GameState.GAME_OVER;
             gameTime++;
@@ -162,6 +155,38 @@ public class Model {
         pickupLocation = new Point(800 + 15, 15 + (int) Math.floor(Math.random() * 370));
         if (Math.random() < 0.5) {pickup = PickupType.HEALTH;}
         else {pickup = PickupType.RAPID_FIRE;}
+    }
+
+    private void handleRapid() {
+        if (rapidStatus == FireState.RAPID) {
+            rapidTime++;
+            if (rapidTime % 5 == 0) {
+                fireLaser();
+            }
+            if (rapidTime > RAPID_MAX_TIME) {
+                rapidTime = 0;
+                rapidStatus = FireState.DEFAULT;
+            }
+        }
+    }
+
+    private void adjustSpawns() {
+        if (gameTime > 15000) {
+            asteroidSpawnRate = 12;
+            asteroidSpeed = 10;
+        } else if (gameTime > 6000) {
+            asteroidSpawnRate = 15;
+            asteroidSpeed = 8;
+        } else if (gameTime > 3000) {
+            asteroidSpawnRate = 20;
+            asteroidSpeed = 6;
+        } else if (gameTime > 1500) {
+            asteroidSpawnRate = 24;
+            asteroidSpeed = 5;
+        } else if (gameTime > 500) {
+            asteroidSpawnRate = 30;
+            asteroidSpeed = 4;
+        }
     }
 
     public void fireLaser() {
