@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Dimension;
@@ -62,7 +63,8 @@ public class View extends JPanel{
         return field;
     }
 
-    public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations, Point shipLocation) {
-        field.updateField(asteroidLocations, laserLocations, shipLocation);
+    public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
+            Point shipLocation, Point pickupLocation, boolean isHealth) {
+        field.updateField(asteroidLocations, laserLocations, shipLocation, pickupLocation, isHealth);
     }
 }

@@ -47,7 +47,8 @@ public class Controller implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         model.tick();
-        view.updateField(model.getAsteroids(), model.getLasers(), model.getShip());
+        view.updateField(model.getAsteroids(), model.getLasers(), model.getShip(),
+            model.getPickupLocation(), model.getPickupType());
     }
 
 }
