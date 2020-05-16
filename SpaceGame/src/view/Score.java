@@ -12,7 +12,11 @@ public class Score extends JPanel {
     private JLabel destroyedLabel2;
     private JLabel destroyedValue;
 
+    private int destroyed;
+
     public Score() {
+        destroyed = 0;
+
         rapidIndicator = new JLabel("Rapid Fire");
         destroyedLabel1 = new JLabel("Asteroids");
         destroyedLabel2 = new JLabel("Destroyed:");
@@ -39,6 +43,13 @@ public class Score extends JPanel {
         add(destroyedLabel2);
         add(destroyedValue);
         add(Box.createVerticalGlue());
+    }
+
+    public void updateAsteroidsDestroyed(int asteroidsDestroyed) {
+        if (destroyed != asteroidsDestroyed) {
+            destroyed = asteroidsDestroyed;
+            destroyedValue.setText(destroyed + "");
+        }
     }
     
 }

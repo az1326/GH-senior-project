@@ -63,8 +63,11 @@ public class View extends JPanel{
         return field;
     }
 
-    public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
-            Point shipLocation, Point pickupLocation, boolean isHealth) {
+    public void updateView(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
+            Point shipLocation, Point pickupLocation, boolean isHealth, int shipHealth, int baseHealth,
+            int asteroidsDestroyed) {
         field.updateField(asteroidLocations, laserLocations, shipLocation, pickupLocation, isHealth);
+        health.updateHealth(shipHealth, baseHealth);
+        score.updateAsteroidsDestroyed(asteroidsDestroyed);
     }
 }

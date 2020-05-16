@@ -21,7 +21,10 @@ public class Controller implements ActionListener{
         public void mouseMoved(MouseEvent e) {
             model.updateMouseLocation(e.getPoint());
         }
-        public void mouseReleased(MouseEvent e) {
+        public void mouseDragged(MouseEvent e) {
+            model.updateMouseLocation(e.getPoint());
+        }
+        public void mousePressed(MouseEvent e) {
             model.fireLaser();
         }
     }
@@ -47,8 +50,8 @@ public class Controller implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         model.tick();
-        view.updateField(model.getAsteroids(), model.getLasers(), model.getShip(),
-            model.getPickupLocation(), model.getPickupType());
+        view.updateView(model.getAsteroids(), model.getLasers(), model.getShip(), model.getPickupLocation(),
+            model.getPickupType(), model.getShipHealth(), model.getBaseHealth(), model.getAsteroidsDestroyed());
     }
 
 }

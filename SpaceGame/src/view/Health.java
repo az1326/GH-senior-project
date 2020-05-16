@@ -48,5 +48,18 @@ public class Health extends JPanel {
         add(baseHealthLabel);
         add(baseHealthValue);
     }
+
+    public void updateHealth(int shipHealth, int baseHealth) {
+        if (this.shipHealth != shipHealth) {
+            this.shipHealth = shipHealth;
+            if (this.shipHealth < 0) {this.shipHealth = 0;}
+            shipHealthValue.setText(this.shipHealth + "%");
+        }
+        if (this.baseHealth != baseHealth) {
+            this.baseHealth = baseHealth;
+            if (this.baseHealth < 0) {this.baseHealth = 0;}
+            baseHealthValue.setText(this.baseHealth + "%");
+        }
+    }
     
 }

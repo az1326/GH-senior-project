@@ -110,7 +110,10 @@ public class Model {
                 spawnAsteroid();
             if (gameTime % PICKUP_SPAWN_RATE == 0)
                 spawnPickup();
+            checkCollision();
             despawn();
+            if (shipHealth <= 0 || baseHealth <= 0)
+                gameStatus = GameState.GAME_OVER;
             gameTime++;
         }
 
@@ -169,12 +172,61 @@ public class Model {
     }
 
     //Collision Detection
+    private void checkCollision() {
+        ArrayList<Laser> lasersToDestroy = new ArrayList<Laser>();
+        ArrayList<Point> asteroidsToDestroy = new ArrayList<Point>();
+        Point s = shipLocation;
+
+        //Asteroid check
+        for (Point p : asteroidLocations) {
+            boolean destroyed = false;
+
+            //Asteroid-Laser check
+            for (Laser laser : laserLocations) {
+                Point l = laser.getLocation();
+                if (checkCircleBoxCollision(p, new Point(l.x - 19, l.y - 2), new Point(l.x + 19, l.y - 2))) {
+                    destroyed = true;
+                    asteroidsDestroyed++;
+                    asteroidsToDestroy.add(p);
+                    lasersToDestroy.add(laser);
+                    laser.destroy();
+                    break;
+                }
+            }
+
+            //Asteroid-Ship check
+            if (!destroyed) {
+                if (checkCircleBoxCollision(p, new Point(s.x - 22, s.y - 12), new Point(s.x + 32, s.y + 12))) {
+                        asteroidsToDestroy.add(p);
+                        shipHealth -= 20;
+                    }
+            }
+        }
+
+        //Ship-Pickup check
+        if (pickupLocation != null) {
+            boolean xLeft = (pickupLocation.x - 15) >= (s.x - 22) && (pickupLocation.x - 15) <= (s.x + 32);
+            boolean xRight = (pickupLocation.x + 15) >= (s.x - 22) && (pickupLocation.x + 15) <= (s.x + 32);
+            boolean yUp = (pickupLocation.y - 15) >= (s.y - 12) && (pickupLocation.y - 15) <= (s.y + 12);
+            boolean yDown = (pickupLocation.y + 15) >= (s.y - 12) && (pickupLocation.y + 15) <= (s.y + 12);
+            if ((xLeft && (yUp || yDown)) || (xRight && (yUp || yDown))) {
+                pickupLocation = null;
+                pickup = PickupType.NONE;
+            }
+        }
+
+        asteroidLocations.removeAll(asteroidsToDestroy);
+        laserLocations.removeAll(lasersToDestroy);
+    }
 
 
     private void despawn() {
         ArrayList<Point> asteroidToDespawn = new ArrayList<Point>();
         for (Point p : asteroidLocations) {
-            if (p.x < -20) {asteroidToDespawn.add(p);}
+            if (p.x < 30) {
+                asteroidToDespawn.add(p);
+                baseHealth -= 5;
+            }
         }
         asteroidLocations.removeAll(asteroidToDespawn);
 
@@ -223,5 +275,57 @@ public class Model {
 
     public boolean getPickupType() {
         return pickup == PickupType.HEALTH;
+    }
+
+    public int getAsteroidsDestroyed() {
+        return asteroidsDestroyed;
+    }
+
+    public int getShipHealth() {
+        return shipHealth;
+    }
+
+    public int getBaseHealth() {
+        return baseHealth;
+    }
+
+    private static boolean checkCircleBoxCollision(Point circle, Point boxUL, Point boxLR) {
+        //Check left vertical segment
+        if (Math.abs(circle.x - boxUL.x) < 20) {
+            if (circle.y > boxUL.y && circle.y < boxLR.y)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxUL.x, 2) + Math.pow(circle.y - boxUL.y, 2)) < 20)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxUL.x, 2) + Math.pow(circle.y - boxLR.y, 2)) < 20)
+                return true;
+        }
+        //Check right vertical segment
+        if (Math.abs(circle.x - boxLR.x) < 20) {
+            if (circle.y > boxUL.y && circle.y < boxLR.y)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxLR.x, 2) + Math.pow(circle.y - boxLR.y, 2)) < 20)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxLR.x, 2) + Math.pow(circle.y - boxUL.y, 2)) < 20)
+                return true;
+        }
+        //Check upper horizontal segment
+        if (Math.abs(circle.y - boxUL.y) < 20) {
+            if (circle.x > boxUL.x && circle.x < boxLR.x)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxUL.x, 2) + Math.pow(circle.y - boxUL.y, 2)) < 20)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxLR.x, 2) + Math.pow(circle.y - boxUL.y, 2)) < 20)
+                return true;
+        }
+        //Check lower horizontal segment
+        if (Math.abs(circle.y - boxLR.y) < 20) {
+            if (circle.x > boxUL.x && circle.x < boxLR.x)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxLR.x, 2) + Math.pow(circle.y - boxLR.y, 2)) < 20)
+                return true;
+            else if (Math.sqrt(Math.pow(circle.x - boxUL.x, 2) + Math.pow(circle.y - boxLR.y, 2)) < 20)
+                return true;
+        }
+        return false;
     }
 }
