@@ -9,6 +9,7 @@ public class Model {
     private final int LASER_SPEED = 5;
     private final int PICKUP_SPEED = 4;
     private final int PICKUP_SPAWN_RATE = 500;
+    private final int RAPID_MAX_TIME = 200;
 
     private Point shipLocation;
     private ArrayList<Point> asteroidLocations;
@@ -23,6 +24,8 @@ public class Model {
     private int gameTime;
     private int asteroidSpeed;
     private int asteroidSpawnRate;
+
+    private int rapidTime;
 
     private GameState gameStatus;
     private FireState rapidStatus;
@@ -42,24 +45,10 @@ public class Model {
     }
 
     public Model() {
-        shipLocation = null;
         asteroidLocations = new ArrayList<Point>();
         laserLocations = new ArrayList<Laser>();
-        pickupLocation = null;
 
-        shipHealth = 100;
-        baseHealth = 100;
-        asteroidsDestroyed = 0;
-
-        gameTime = 1;
-        asteroidSpeed = 3;
-        asteroidSpawnRate = 25;
-
-        gameStatus = GameState.RESET;
-        rapidStatus = FireState.DEFAULT;
-        pickup = PickupType.NONE;
-
-        mouseTarget = new Point(0,200);
+        reset();
     }
 
     public void start() {
@@ -79,6 +68,9 @@ public class Model {
 
         gameTime = 1;
         asteroidSpeed = 3;
+        asteroidSpawnRate = 25;
+
+        rapidTime = 0;
 
         gameStatus = GameState.RESET;
         rapidStatus = FireState.DEFAULT;
@@ -112,6 +104,16 @@ public class Model {
                 spawnPickup();
             checkCollision();
             despawn();
+            if (rapidStatus == FireState.RAPID) {
+                rapidTime++;
+                if (rapidTime % 5 == 0) {
+                    fireLaser();
+                }
+                if (rapidTime > RAPID_MAX_TIME) {
+                    rapidTime = 0;
+                    rapidStatus = FireState.DEFAULT;
+                }
+            }
             if (shipHealth <= 0 || baseHealth <= 0)
                 gameStatus = GameState.GAME_OVER;
             gameTime++;
@@ -210,6 +212,12 @@ public class Model {
             boolean yUp = (pickupLocation.y - 15) >= (s.y - 12) && (pickupLocation.y - 15) <= (s.y + 12);
             boolean yDown = (pickupLocation.y + 15) >= (s.y - 12) && (pickupLocation.y + 15) <= (s.y + 12);
             if ((xLeft && (yUp || yDown)) || (xRight && (yUp || yDown))) {
+                if (pickup == PickupType.HEALTH) {
+                    shipHealth = Math.min(100, shipHealth + 20);
+                    baseHealth = Math.min(100, baseHealth + 10);
+                } else if (pickup == PickupType.RAPID_FIRE) {
+                    rapidStatus = FireState.RAPID;
+                }
                 pickupLocation = null;
                 pickup = PickupType.NONE;
             }
@@ -287,6 +295,14 @@ public class Model {
 
     public int getBaseHealth() {
         return baseHealth;
+    }
+
+    public GameState getGameStatus() {
+        return gameStatus;
+    }
+
+    public FireState getFireStatus() {
+        return rapidStatus;
     }
 
     private static boolean checkCircleBoxCollision(Point circle, Point boxUL, Point boxLR) {

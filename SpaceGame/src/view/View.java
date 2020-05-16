@@ -63,11 +63,23 @@ public class View extends JPanel{
         return field;
     }
 
-    public void updateView(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
+    public void updateViewInProgress(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
             Point shipLocation, Point pickupLocation, boolean isHealth, int shipHealth, int baseHealth,
-            int asteroidsDestroyed) {
+            int asteroidsDestroyed, boolean isRapidFire) {
         field.updateField(asteroidLocations, laserLocations, shipLocation, pickupLocation, isHealth);
         health.updateHealth(shipHealth, baseHealth);
-        score.updateAsteroidsDestroyed(asteroidsDestroyed);
+        score.updateScore(asteroidsDestroyed, isRapidFire);
+    }
+
+    public void updateViewGameOver(int shipHealth, int baseHealth) {
+        field.updateGameOver(shipHealth <= 0);
+        health.updateHealth(shipHealth, baseHealth);
+        score.updateGameOver();
+    }
+
+    public void updateViewReset() {
+        field.updateReset();
+        score.updateReset();
+        health.updateReset();
     }
 }

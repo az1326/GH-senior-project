@@ -61,5 +61,12 @@ public class Health extends JPanel {
             baseHealthValue.setText(this.baseHealth + "%");
         }
     }
+
+    public void updateReset() {
+        shipHealth = 100;
+        baseHealth = 100;
+        shipHealthValue.setText("100%");
+        baseHealthValue.setText("100%");
+    }
     
 }

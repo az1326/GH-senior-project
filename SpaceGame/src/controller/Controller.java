@@ -25,7 +25,18 @@ public class Controller implements ActionListener{
             model.updateMouseLocation(e.getPoint());
         }
         public void mousePressed(MouseEvent e) {
-            model.fireLaser();
+            if (model.getGameStatus() == Model.GameState.IN_PROGRESS)
+                model.fireLaser();
+        }
+        public void mouseClicked(MouseEvent e) {
+            if (model.getGameStatus() == Model.GameState.GAME_OVER) {
+                model.reset();
+                view.updateViewReset();
+            }
+            else if (model.getGameStatus() == Model.GameState.RESET) {
+                timer.start();
+                model.start();
+            }
         }
     }
 
@@ -44,14 +55,18 @@ public class Controller implements ActionListener{
 
     public void displayGUI() {
         frame.setVisible(true);
-        timer.start();
-        model.start();
     }
 
     public void actionPerformed(ActionEvent e) {
         model.tick();
-        view.updateView(model.getAsteroids(), model.getLasers(), model.getShip(), model.getPickupLocation(),
-            model.getPickupType(), model.getShipHealth(), model.getBaseHealth(), model.getAsteroidsDestroyed());
+        if (model.getGameStatus() == Model.GameState.IN_PROGRESS) {
+            view.updateViewInProgress(model.getAsteroids(), model.getLasers(), model.getShip(),
+            model.getPickupLocation(), model.getPickupType(), model.getShipHealth(), model.getBaseHealth(),
+            model.getAsteroidsDestroyed(), model.getFireStatus() == Model.FireState.RAPID);
+        } else if (model.getGameStatus() == Model.GameState.GAME_OVER) {
+            timer.stop();
+            view.updateViewGameOver(model.getShipHealth(), model.getBaseHealth());
+        }
     }
 
 }

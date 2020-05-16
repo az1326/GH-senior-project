@@ -13,6 +13,7 @@ public class Score extends JPanel {
     private JLabel destroyedValue;
 
     private int destroyed;
+    private int indicatorCount;
 
     public Score() {
         destroyed = 0;
@@ -45,11 +46,28 @@ public class Score extends JPanel {
         add(Box.createVerticalGlue());
     }
 
-    public void updateAsteroidsDestroyed(int asteroidsDestroyed) {
+    public void updateScore(int asteroidsDestroyed, boolean isRapidFire) {
         if (destroyed != asteroidsDestroyed) {
             destroyed = asteroidsDestroyed;
             destroyedValue.setText(destroyed + "");
         }
+        if (!isRapidFire) {
+            rapidIndicator.setForeground(Color.GRAY);
+        } else {
+            indicatorCount++;
+            if (indicatorCount % 10 < 5) {rapidIndicator.setForeground(Color.WHITE);} 
+            else {rapidIndicator.setForeground(Color.RED);}
+        }
+    }
+
+    public void updateGameOver() {
+        rapidIndicator.setForeground(Color.GRAY);
     }
     
+    public void updateReset() {
+        destroyed = 0;
+        indicatorCount = 0;
+        destroyedValue.setText("0");
+        rapidIndicator.setForeground(Color.GRAY);
+    }
 }
