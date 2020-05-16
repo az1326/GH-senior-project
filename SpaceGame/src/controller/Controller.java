@@ -65,7 +65,7 @@ public class Controller implements ActionListener{
             model.getAsteroidsDestroyed(), model.getFireStatus() == Model.FireState.RAPID);
         } else if (model.getGameStatus() == Model.GameState.GAME_OVER) {
             timer.stop();
-            view.updateViewGameOver(model.getShipHealth(), model.getBaseHealth());
+            view.updateViewGameOver(model.getShipHealth(), model.getBaseHealth(), model.getGameTicks() / 50);
         }
     }
 

@@ -320,6 +320,10 @@ public class Model {
         return baseHealth;
     }
 
+    public int getGameTicks() {
+        return gameTime;
+    }
+
     public GameState getGameStatus() {
         return gameStatus;
     }

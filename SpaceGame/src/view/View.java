@@ -71,8 +71,8 @@ public class View extends JPanel{
         score.updateScore(asteroidsDestroyed, isRapidFire);
     }
 
-    public void updateViewGameOver(int shipHealth, int baseHealth) {
-        field.updateGameOver(shipHealth <= 0);
+    public void updateViewGameOver(int shipHealth, int baseHealth, int gameSeconds) {
+        field.updateGameOver(shipHealth <= 0, gameSeconds);
         health.updateHealth(shipHealth, baseHealth);
         score.updateGameOver();
     }
