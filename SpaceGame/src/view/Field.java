@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 @SuppressWarnings("serial")
@@ -16,6 +17,7 @@ public class Field extends JPanel {
     private Point pickup;
     private boolean isHealth;
     private boolean gameOver;
+    private boolean reset;
     private boolean shipDestroyed;
     private int secondsLasted;
     
@@ -26,12 +28,16 @@ public class Field extends JPanel {
         lasers = new ArrayList<Point>();
         ship = null;
         gameOver = false;
+        reset = true;
         shipDestroyed = false;
         pickup = null;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Font f = g.getFont();
+        Color translucent = new Color(Color.LIGHT_GRAY.getRed(), Color.LIGHT_GRAY.getGreen(),
+            Color.LIGHT_GRAY.getBlue(), 127);
 
         //Draw base
         g.drawImage(Images.BASE, 0, 0, 77, 400, 0, 0, 135, 700, null);
@@ -65,24 +71,30 @@ public class Field extends JPanel {
                 g.drawImage(Images.EXPLODE, 0, 200 -  39, 88, 200 +  39, 0, 0, 440, 390, null);
                 g.drawImage(Images.SHIP, ship.x - 35, ship.y - 20, ship.x + 35, ship.y + 20, 0, 0, 2400, 1372, null);
             }
-            Color translucent = new Color(Color.LIGHT_GRAY.getRed(), Color.LIGHT_GRAY.getGreen(),
-                Color.LIGHT_GRAY.getBlue(), 127);
             g.setColor(translucent);
             g.fillRect(0, 0, 800, 400);
             g.setColor(Color.WHITE);
-            g.setFont(g.getFont().deriveFont(g.getFont().getSize() * 2f));
+            g.setFont(f.deriveFont(f.getSize() * 2f));
             String gt = "You survived for " + secondsLasted + " seconds.";
             g.drawString(gt, (800 - g.getFontMetrics().stringWidth(gt)) / 2, 220 + g.getFontMetrics().getAscent());
             g.setColor(Color.RED);
-            g.setFont(g.getFont().deriveFont(g.getFont().getSize() * 3f));
+            g.setFont(f.deriveFont(f.getSize() * 6f));
             String gg = "GAME OVER";
             g.drawString(gg, (800 - g.getFontMetrics().stringWidth(gg)) / 2, 200);
+        }
+
+        if (reset) {
+            g.setColor(translucent);
+            g.setFont(f.deriveFont(f.getSize() * 2f));
+            String n = "Click to play";
+            g.drawString(n, (800 - g.getFontMetrics().stringWidth(n)) / 2, 200 + g.getFontMetrics().getAscent() / 2);
         }
     }
 
     public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
             Point shipLocation, Point pickupLocation, boolean health) {
         gameOver = false;
+        reset = false;
         asteroids = asteroidLocations;
         lasers = laserLocations;
         ship = shipLocation;
@@ -94,6 +106,7 @@ public class Field extends JPanel {
     public void updateGameOver(boolean isShipDead, int gameSeconds) {
         shipDestroyed = isShipDead;
         gameOver = true;
+        reset = false;
         secondsLasted = gameSeconds;
         repaint();
     }
@@ -103,6 +116,7 @@ public class Field extends JPanel {
         lasers = new ArrayList<Point>();
         ship = null;
         gameOver = false;
+        reset = true;
         shipDestroyed = false;
         pickup = null;
         repaint();
