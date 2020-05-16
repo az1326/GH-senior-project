@@ -3,7 +3,6 @@ package view;
 import javax.swing.*;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.BorderLayout;
 
 @SuppressWarnings("serial")
