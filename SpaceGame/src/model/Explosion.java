@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 
 public class Explosion {
-    private final int DURATION = 5;
+    private final int DURATION = 10;
 
     private Point location;
     private int time;

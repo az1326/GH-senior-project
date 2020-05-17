@@ -62,7 +62,7 @@ public class Field extends JPanel {
         }
 
         for (Point p : explosions) {
-            g.drawImage(Images.EXPLODE, p.x - 22, p.y - 19, p.x + 22, p.y + 20, 0, 0, 440, 390, null);
+            g.drawImage(Images.EXPLODE, p.x - 44, p.y - 39, p.x + 44, p.y + 39, 0, 0, 440, 390, null);
         }
 
         if (ship != null && !gameOver)
