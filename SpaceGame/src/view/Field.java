@@ -100,10 +100,17 @@ public class Field extends JPanel {
             //Draw Game Over screen
             g.setColor(translucent);
             g.fillRect(0, 0, 800, 400);
+
             g.setColor(Color.WHITE);
             g.setFont(f.deriveFont(f.getSize() * 2f));
             String gt = "You survived for " + secondsLasted + " seconds.";
             g.drawString(gt, (800 - g.getFontMetrics().stringWidth(gt)) / 2, 220 + g.getFontMetrics().getAscent());
+
+            g.setColor(Color.LIGHT_GRAY);
+            g.setFont(f);
+            String ta = "Click to try again";
+            g.drawString(ta, (800-g.getFontMetrics().stringWidth(ta)) / 2, 240 + g.getFontMetrics().getAscent() * 3);
+
             g.setColor(Color.RED);
             g.setFont(f.deriveFont(f.getSize() * 6f));
             String gg = "GAME OVER";
