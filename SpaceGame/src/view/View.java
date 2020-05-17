@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 
-import java.awt.Graphics;
 import java.awt.Dimension;
 import java.awt.Point;
 
