@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controller implements ActionListener{
+    private final int FPS = 50;
+
     private Model model;
     private View view;
     private JFrame frame = new JFrame("Space Game");
@@ -50,7 +52,7 @@ public class Controller implements ActionListener{
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        timer = new Timer(20, this);
+        timer = new Timer(1000 / FPS, this);
     }
 
     public void displayGUI() {
@@ -60,12 +62,12 @@ public class Controller implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         model.tick();
         if (model.getGameStatus() == Model.GameState.IN_PROGRESS) {
-            view.updateViewInProgress(model.getAsteroids(), model.getLasers(), model.getExplosions(), model.getShip(),
-            model.getPickupLocation(), model.getPickupType(), model.getShipHealth(), model.getBaseHealth(),
-            model.getAsteroidsDestroyed(), model.getFireStatus() == Model.FireState.RAPID);
+            view.updateViewInProgress(model.getAsteroids(), model.getLasers(), model.getExplosions(), model.getStars(),
+            model.getShip(), model.getPickupLocation(), model.getPickupType(), model.getShipHealth(),
+            model.getBaseHealth(), model.getAsteroidsDestroyed(), model.getFireStatus() == Model.FireState.RAPID);
         } else if (model.getGameStatus() == Model.GameState.GAME_OVER) {
             timer.stop();
-            view.updateViewGameOver(model.getShipHealth(), model.getBaseHealth(), model.getGameTicks() / 50);
+            view.updateViewGameOver(model.getShipHealth(), model.getBaseHealth(), model.getGameTicks() / FPS);
         }
     }
 

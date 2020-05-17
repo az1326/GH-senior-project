@@ -10,11 +10,13 @@ public class Model {
     private final int PICKUP_SPEED = 4;
     private final int PICKUP_SPAWN_RATE = 500;
     private final int RAPID_MAX_TIME = 200;
+    private final int STAR_SPAWN_RATE = 3;
 
     private Point shipLocation;
     private ArrayList<Point> asteroidLocations;
     private ArrayList<Laser> laserLocations;
     private ArrayList<Explosion> explosionLocations;
+    private ArrayList<Star> starLocations;
     private Point pickupLocation;
     private PickupType pickup;
 
@@ -49,6 +51,7 @@ public class Model {
         asteroidLocations = new ArrayList<Point>();
         laserLocations = new ArrayList<Laser>();
         explosionLocations = new ArrayList<Explosion>();
+        starLocations = new ArrayList<Star>();
 
         reset();
     }
@@ -63,6 +66,7 @@ public class Model {
         asteroidLocations.clear();
         laserLocations.clear();
         explosionLocations.clear();
+        starLocations.clear();
         pickupLocation = null;
 
         shipHealth = 100;
@@ -105,9 +109,12 @@ public class Model {
                 spawnAsteroid();
             if (gameTime % PICKUP_SPAWN_RATE == 0)
                 spawnPickup();
+            if (gameTime % STAR_SPAWN_RATE == 0)
+                spawnStar();
             checkCollision();
             despawn();
             tickExplosions();
+            tickStars();
             handleRapid();
             adjustSpawns();
             if (shipHealth <= 0 || baseHealth <= 0)
@@ -159,6 +166,11 @@ public class Model {
         else {pickup = PickupType.RAPID_FIRE;}
     }
 
+    private void spawnStar() {
+        Star s = new Star((int) Math.floor(Math.random() * 400));
+        starLocations.add(s);
+    }
+
     private void handleRapid() {
         if (rapidStatus == FireState.RAPID) {
             rapidTime++;
@@ -179,6 +191,15 @@ public class Model {
                 toDestroy.add(e);
         }
         explosionLocations.removeAll(toDestroy);
+    }
+
+    private void tickStars() {
+        ArrayList<Star> toDestroy = new ArrayList<Star>();
+        for (Star s : starLocations) {
+            if (s.tick())
+                toDestroy.add(s);
+        }
+        starLocations.removeAll(toDestroy);
     }
 
     private void adjustSpawns() {
@@ -317,6 +338,14 @@ public class Model {
         ArrayList<Point> temp = new ArrayList<Point>();
         for (Explosion e : explosionLocations) {
             temp.add(e.getLocation());
+        }
+        return temp;
+    }
+
+    public ArrayList<Point> getStars() {
+        ArrayList<Point> temp = new ArrayList<Point>();
+        for (Star s : starLocations) {
+            temp.add(s.getLocation());
         }
         return temp;
     }

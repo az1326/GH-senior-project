@@ -14,6 +14,7 @@ public class Field extends JPanel {
     private ArrayList<Point> asteroids;
     private ArrayList<Point> lasers;
     private ArrayList<Point> explosions;
+    private ArrayList<Point> stars;
     private Point ship;
     private Point pickup;
     private boolean isHealth;
@@ -27,6 +28,7 @@ public class Field extends JPanel {
         asteroids = new ArrayList<Point>();
         lasers = new ArrayList<Point>();
         explosions = new ArrayList<Point>();
+        stars = new ArrayList<Point>();
         ship = null;
         gameOver = false;
         reset = true;
@@ -39,6 +41,11 @@ public class Field extends JPanel {
         Font f = g.getFont();
         Color translucent = new Color(Color.LIGHT_GRAY.getRed(), Color.LIGHT_GRAY.getGreen(),
             Color.LIGHT_GRAY.getBlue(), 127);
+
+        for (Point p : stars) {
+            g.setColor(Color.WHITE);
+            g.fillRect(p.x - 2, p.y -2, 5, 5);
+        }
 
         //Draw base
         g.drawImage(Images.BASE, 0, 0, 77, 400, 0, 0, 135, 700, null);
@@ -97,12 +104,14 @@ public class Field extends JPanel {
     }
 
     public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
-            ArrayList<Point> explosionLocations, Point shipLocation, Point pickupLocation, boolean health) {
+            ArrayList<Point> explosionLocations, ArrayList<Point> starLocations, Point shipLocation,
+            Point pickupLocation, boolean health) {
         gameOver = false;
         reset = false;
         asteroids = asteroidLocations;
         lasers = laserLocations;
         explosions = explosionLocations;
+        stars = starLocations;
         ship = shipLocation;
         pickup = pickupLocation;
         isHealth = health;
@@ -121,6 +130,7 @@ public class Field extends JPanel {
         asteroids = new ArrayList<Point>();
         lasers = new ArrayList<Point>();
         explosions = new ArrayList<Point>();
+        stars = new ArrayList<Point>();
         ship = null;
         gameOver = false;
         reset = true;
