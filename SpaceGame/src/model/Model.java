@@ -14,6 +14,7 @@ public class Model {
     private Point shipLocation;
     private ArrayList<Point> asteroidLocations;
     private ArrayList<Laser> laserLocations;
+    private ArrayList<Explosion> explosionLocations;
     private Point pickupLocation;
     private PickupType pickup;
 
@@ -47,6 +48,7 @@ public class Model {
     public Model() {
         asteroidLocations = new ArrayList<Point>();
         laserLocations = new ArrayList<Laser>();
+        explosionLocations = new ArrayList<Explosion>();
 
         reset();
     }
@@ -60,6 +62,7 @@ public class Model {
         shipLocation = null;
         asteroidLocations.clear();
         laserLocations.clear();
+        explosionLocations.clear();
         pickupLocation = null;
 
         shipHealth = 100;
@@ -104,6 +107,7 @@ public class Model {
                 spawnPickup();
             checkCollision();
             despawn();
+            tickExplosions();
             handleRapid();
             adjustSpawns();
             if (shipHealth <= 0 || baseHealth <= 0)
@@ -168,6 +172,15 @@ public class Model {
         }
     }
 
+    private void tickExplosions() {
+        ArrayList<Explosion> toDestroy = new ArrayList<Explosion>();
+        for (Explosion e : explosionLocations) {
+            if (e.tick())
+                toDestroy.add(e);
+        }
+        explosionLocations.removeAll(toDestroy);
+    }
+
     private void adjustSpawns() {
         if (gameTime > 15000) {
             asteroidSpawnRate = 12;
@@ -212,6 +225,7 @@ public class Model {
                 if (checkCircleBoxCollision(p, new Point(l.x - 19, l.y - 2), new Point(l.x + 19, l.y - 2))) {
                     destroyed = true;
                     asteroidsDestroyed++;
+                    explosionLocations.add(new Explosion(p));
                     asteroidsToDestroy.add(p);
                     lasersToDestroy.add(laser);
                     laser.destroy();
@@ -222,6 +236,7 @@ public class Model {
             //Asteroid-Ship check
             if (!destroyed) {
                 if (checkCircleBoxCollision(p, new Point(s.x - 22, s.y - 12), new Point(s.x + 32, s.y + 12))) {
+                        explosionLocations.add(new Explosion(p));
                         asteroidsToDestroy.add(p);
                         shipHealth -= 20;
                     }
@@ -255,6 +270,7 @@ public class Model {
         ArrayList<Point> asteroidToDespawn = new ArrayList<Point>();
         for (Point p : asteroidLocations) {
             if (p.x < 30) {
+                explosionLocations.add(new Explosion(p));
                 asteroidToDespawn.add(p);
                 baseHealth -= 5;
             }
@@ -293,6 +309,14 @@ public class Model {
         ArrayList<Point> temp = new ArrayList<Point>();
         for (Laser l : laserLocations) {
             temp.add(l.getLocation());
+        }
+        return temp;
+    }
+
+    public ArrayList<Point> getExplosions() {
+        ArrayList<Point> temp = new ArrayList<Point>();
+        for (Explosion e : explosionLocations) {
+            temp.add(e.getLocation());
         }
         return temp;
     }

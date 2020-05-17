@@ -13,19 +13,20 @@ import java.awt.Graphics;
 public class Field extends JPanel {
     private ArrayList<Point> asteroids;
     private ArrayList<Point> lasers;
+    private ArrayList<Point> explosions;
     private Point ship;
     private Point pickup;
     private boolean isHealth;
     private boolean gameOver;
     private boolean reset;
     private boolean shipDestroyed;
-    private int secondsLasted;
-    
+    private int secondsLasted; 
 
     public Field() {
         setBackground(Color.BLACK);
         asteroids = new ArrayList<Point>();
         lasers = new ArrayList<Point>();
+        explosions = new ArrayList<Point>();
         ship = null;
         gameOver = false;
         reset = true;
@@ -60,6 +61,10 @@ public class Field extends JPanel {
             g.drawImage(Images.LASER, p.x - 19, p.y - 2, p.x + 19, p.y + 2, 0, 0, 380, 40, null);
         }
 
+        for (Point p : explosions) {
+            g.drawImage(Images.EXPLODE, p.x - 22, p.y - 19, p.x + 22, p.y + 20, 0, 0, 440, 390, null);
+        }
+
         if (ship != null && !gameOver)
             g.drawImage(Images.SHIP, ship.x - 35, ship.y - 20, ship.x + 35, ship.y + 20, 0, 0, 2400, 1372, null);
         else if (gameOver) {
@@ -92,11 +97,12 @@ public class Field extends JPanel {
     }
 
     public void updateField(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
-            Point shipLocation, Point pickupLocation, boolean health) {
+            ArrayList<Point> explosionLocations, Point shipLocation, Point pickupLocation, boolean health) {
         gameOver = false;
         reset = false;
         asteroids = asteroidLocations;
         lasers = laserLocations;
+        explosions = explosionLocations;
         ship = shipLocation;
         pickup = pickupLocation;
         isHealth = health;
@@ -114,6 +120,7 @@ public class Field extends JPanel {
     public void updateReset() {
         asteroids = new ArrayList<Point>();
         lasers = new ArrayList<Point>();
+        explosions = new ArrayList<Point>();
         ship = null;
         gameOver = false;
         reset = true;

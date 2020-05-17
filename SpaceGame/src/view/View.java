@@ -64,9 +64,10 @@ public class View extends JPanel{
     }
 
     public void updateViewInProgress(ArrayList<Point> asteroidLocations, ArrayList<Point> laserLocations,
-            Point shipLocation, Point pickupLocation, boolean isHealth, int shipHealth, int baseHealth,
-            int asteroidsDestroyed, boolean isRapidFire) {
-        field.updateField(asteroidLocations, laserLocations, shipLocation, pickupLocation, isHealth);
+            ArrayList<Point> explosionLocations, Point shipLocation, Point pickupLocation, boolean isHealth,
+            int shipHealth, int baseHealth, int asteroidsDestroyed, boolean isRapidFire) {
+        field.updateField(asteroidLocations, laserLocations, explosionLocations, shipLocation, pickupLocation,
+            isHealth);
         health.updateHealth(shipHealth, baseHealth);
         score.updateScore(asteroidsDestroyed, isRapidFire);
     }

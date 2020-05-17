@@ -60,7 +60,7 @@ public class Controller implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         model.tick();
         if (model.getGameStatus() == Model.GameState.IN_PROGRESS) {
-            view.updateViewInProgress(model.getAsteroids(), model.getLasers(), model.getShip(),
+            view.updateViewInProgress(model.getAsteroids(), model.getLasers(), model.getExplosions(), model.getShip(),
             model.getPickupLocation(), model.getPickupType(), model.getShipHealth(), model.getBaseHealth(),
             model.getAsteroidsDestroyed(), model.getFireStatus() == Model.FireState.RAPID);
         } else if (model.getGameStatus() == Model.GameState.GAME_OVER) {
