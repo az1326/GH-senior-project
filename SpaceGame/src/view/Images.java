@@ -60,5 +60,4 @@ public class Images {
         } catch (IOException e) {}
         LASER = temp;
     }
-
 }

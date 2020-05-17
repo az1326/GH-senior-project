@@ -15,14 +15,19 @@ public class Score extends JPanel {
     private int destroyed;
     private int indicatorCount;
 
+    /**
+     * Creates a panel displaying number of asteroids destroyed and rapid fire status.
+     */
     public Score() {
         destroyed = 0;
 
+        //Instantiate labels
         rapidIndicator = new JLabel("Rapid Fire");
         destroyedLabel1 = new JLabel("Asteroids");
         destroyedLabel2 = new JLabel("Destroyed:");
         destroyedValue = new JLabel("0");
 
+        //Format labels
         rapidIndicator.setAlignmentX(CENTER_ALIGNMENT);
         rapidIndicator.setFont(rapidIndicator.getFont().deriveFont(16f));
         rapidIndicator.setForeground(Color.GRAY);
@@ -35,6 +40,7 @@ public class Score extends JPanel {
         destroyedValue.setAlignmentX(CENTER_ALIGNMENT);
         destroyedValue.setForeground(Color.WHITE);
 
+        //Add labels to panel
         setBackground(Color.DARK_GRAY);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(Box.createVerticalGlue());
@@ -46,6 +52,11 @@ public class Score extends JPanel {
         add(Box.createVerticalGlue());
     }
 
+    /**
+     * Updates the score panel with the latest data.
+     * @param asteroidsDestroyed the number of asteroids destroyed this game
+     * @param isRapidFire {@code true} if rapid fire is active, {@code false} otherwise
+     */
     public void updateScore(int asteroidsDestroyed, boolean isRapidFire) {
         if (destroyed != asteroidsDestroyed) {
             destroyed = asteroidsDestroyed;
@@ -60,10 +71,16 @@ public class Score extends JPanel {
         }
     }
 
+    /**
+     * Updates the score panel to game over status.
+     */
     public void updateGameOver() {
         rapidIndicator.setForeground(Color.GRAY);
     }
     
+    /**
+     * Resets the score panel.
+     */
     public void updateReset() {
         destroyed = 0;
         indicatorCount = 0;

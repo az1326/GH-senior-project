@@ -16,10 +16,14 @@ public class Health extends JPanel {
     private int shipHealth;
     private int baseHealth;
 
+    /**
+     * Creates a panel displaying the health of the ship and base.
+     */
     public Health() {
         shipHealth = 100;
         baseHealth = 100;
 
+        //Instantiate and format labels
         shipHealthLabel = new JLabel("Ship Health: ");
         shipHealthLabel.setHorizontalAlignment(JLabel.CENTER);
         shipHealthLabel.setVerticalAlignment(JLabel.CENTER);
@@ -40,6 +44,7 @@ public class Health extends JPanel {
         baseHealthValue.setVerticalAlignment(JLabel.CENTER);
         baseHealthValue.setForeground(Color.WHITE);
 
+        //Combine components
         setBackground(Color.DARK_GRAY);
         setLayout(new GridLayout(5, 1));
         add(shipHealthLabel);
@@ -49,6 +54,11 @@ public class Health extends JPanel {
         add(baseHealthValue);
     }
 
+    /**
+     * Updates the health panel with the latest data.
+     * @param shipHealth the health of the ship
+     * @param baseHealth the health of the base
+     */
     public void updateHealth(int shipHealth, int baseHealth) {
         if (this.shipHealth != shipHealth) {
             this.shipHealth = shipHealth;
@@ -62,6 +72,9 @@ public class Health extends JPanel {
         }
     }
 
+    /**
+     * Resets the health panel.
+     */
     public void updateReset() {
         shipHealth = 100;
         baseHealth = 100;

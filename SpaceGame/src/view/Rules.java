@@ -9,6 +9,9 @@ import java.awt.BorderLayout;
 public class Rules extends JPanel{
     private JLabel rules;
 
+    /**
+     * Creates a panel displaying the rules. White text centered on dark gray background.
+     */
     public Rules() {
         rules = new JLabel("<html><div style='text-align: center;'>Welcome to SpaceGame! Defend your base from "
         + "asteroids.<br>Use the mouse to move your ship and click to fire a laser.<br>Be economical, you can only " 
@@ -22,6 +25,4 @@ public class Rules extends JPanel{
         setLayout(new BorderLayout());
         add(rules, BorderLayout.CENTER);
     }
-
-    
 }

@@ -21,14 +21,21 @@ public class Info extends JPanel {
         }
     }
 
+    /**
+     * Creates a panel displaying information about the power-ups.
+     */
     public Info() {
+        //Instantiate components
         healthText = new JLabel("<html>Pick up to<br>recover health.</html>");
         rapidText = new JLabel("<html>Pick up to<br>fire more lasers.</html>");
         icons = new Icons();
 
+        //Format components
         healthText.setForeground(Color.WHITE);
         rapidText.setForeground(Color.WHITE);
+        icons.setPreferredSize(new Dimension(50, 100));
 
+        //Combine components
         JPanel tempPanel = new JPanel();
         tempPanel.setLayout(new BoxLayout(tempPanel, BoxLayout.PAGE_AXIS));
         tempPanel.add(Box.createVerticalGlue());
@@ -38,8 +45,6 @@ public class Info extends JPanel {
         tempPanel.add(Box.createVerticalGlue());
         tempPanel.setPreferredSize(new Dimension(120, 100));
         tempPanel.setBackground(Color.DARK_GRAY);
-
-        icons.setPreferredSize(new Dimension(50, 100));
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         setBackground(Color.DARK_GRAY);
