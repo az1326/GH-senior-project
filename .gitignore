@@ -17,6 +17,7 @@ bin2
 
 # Package Files #
 *.jar
+!jar Files/*.jar
 *.war
 *.nar
 *.ear
