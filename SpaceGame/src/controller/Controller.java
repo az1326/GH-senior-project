@@ -39,6 +39,7 @@ public class Controller implements ActionListener{
             } else if (model.getGameStatus() == Model.GameState.RESET) { //Start game if just reset
                 timer.start();
                 model.start();
+                model.updateMouseLocation(e.getPoint());
             }
         }
     }
