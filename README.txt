@@ -5,6 +5,9 @@ The project consists of two small test apps and two large apps. The small test a
 as a small-scale excercise new concepts. The two large apps (Tetris and SpaceGame) brought together many moving parts
 to form a more cohesive, purposeful program.
 
+This parts of this project were programmed and tested on MacOS, so the apps look the best on a Mac. They will still work
+on Windows, but there may be slight graphical issues with the GUI.
+
 The source code files for each project are located in the folder for the respective project. Executable Java Archive files 
 for each project are located in the "jar Files" folder.
 
